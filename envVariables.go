@@ -24,3 +24,17 @@ func getEnvVars() (map[string]string, error) {
 	}
 	return igdbEnvVals, nil
 }
+
+// fetches value of .env variable for given key
+func getEnvValue(key string) (string, error) {
+	err := env.Load(".env")
+	if err != nil {
+		return "", err
+	}
+
+	val, err := env.MustGet(key)
+	if err != nil {
+		return "", err
+	}
+	return val, nil
+}

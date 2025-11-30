@@ -5,10 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	// "github.com/gofor-little/env"
 )
-
-const IGDB_URL = "https://id.twitch.tv/oauth2/token"
 
 func repl() error {
 	// if err := scanner.Err(); err != nil {
@@ -19,7 +16,18 @@ func repl() error {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	var input []string
+
 	envVars, err := getEnvVars()
+	if err != nil {
+		return err
+	}
+
+	igdbTokenData, err := requestIgdbToken(envVars)
+	if err != nil {
+		return err
+	}
+	var token IgdbToken
+	err = unmarshallJson(igdbTokenData, &token)
 	if err != nil {
 		return err
 	}
@@ -27,16 +35,23 @@ func repl() error {
 	for scanner.Scan() {
 		input = parseInput(scanner.Text())
 
-		data, err := postReq(input, IGDB_URL, envVars)
+		fmt.Printf("token: %s\n\n", token.AccessToken)
+
+		igdbReqData, err := fetchIgdbData(fmt.Sprintf(`search "%s"; fields *;`, input[0]), token.AccessToken)
 		if err != nil {
 			return err
 		}
-		var token IgdbToken
-		unmarshallJson(data, &token)
+		var igdbGames IgdbGames
+		err = unmarshallJson(igdbReqData, &igdbGames)
+		if err != nil {
+			return err
+		}
 
-		fmt.Println("yep!")
-		fmt.Printf("token: %s\n", token.AccessToken)
-		fmt.Printf("type: %s\n", token.TokenType)
+		for _, game := range igdbGames {
+			if game.Name != "" {
+				fmt.Println(game.Name)
+			}
+		}
 	}
 	return nil
 }
