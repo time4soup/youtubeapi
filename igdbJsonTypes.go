@@ -1,5 +1,11 @@
 package main
 
+type IgdbError []struct {
+	Title  string `json:"title"`
+	Status int    `json:"status"`
+	Cause  string `json:"cause"`
+}
+
 type IgdbToken struct {
 	AccessToken string `json:"access_token"`
 	ExpiresIn   int    `json:"expires_in"`
@@ -9,53 +15,62 @@ type IgdbToken struct {
 type IgdbGames []struct {
 	ID                    int     `json:"id"`
 	AgeRatings            []int   `json:"age_ratings"`
-	AggregatedRating      float64 `json:"aggregated_rating,omitempty"`
-	AggregatedRatingCount int     `json:"aggregated_rating_count,omitempty"`
-	AlternativeNames      []int   `json:"alternative_names,omitempty"`
-	Bundles               []int   `json:"bundles,omitempty"`
+	AggregatedRating      float64 `json:"aggregated_rating"`
+	AggregatedRatingCount int     `json:"aggregated_rating_count"`
+	AlternativeNames      []int   `json:"alternative_names"`
+	Artworks              []int   `json:"artworks"`
+	Bundles               []int   `json:"bundles"`
+	Category              int     `json:"category"`
+	Checksum              string  `json:"checksum"`
+	Collection            int     `json:"collection"`
+	Collections           []int   `json:"collections"`
 	Cover                 int     `json:"cover"`
 	CreatedAt             int     `json:"created_at"`
-	Expansions            []int   `json:"expansions,omitempty"`
-	ExternalGames         []int   `json:"external_games,omitempty"`
+	Dlcs                  []int   `json:"dlcs"`
+	ExpandedGames         []int   `json:"expanded_games"`
+	Expansions            []int   `json:"expansions"`
+	ExternalGames         []int   `json:"external_games"`
 	FirstReleaseDate      int     `json:"first_release_date"`
-	Franchise             int     `json:"franchise,omitempty"`
+	Follows               int     `json:"follows"`
+	Forks                 []int   `json:"forks"`
+	Franchise             int     `json:"franchise"`
 	Franchises            []int   `json:"franchises"`
-	GameEngines           []int   `json:"game_engines,omitempty"`
+	GameEngines           []int   `json:"game_engines"`
+	GameLocalizations     []int   `json:"game_localizations"`
 	GameModes             []int   `json:"game_modes"`
+	GameStatus            int     `json:"game_status"`
+	GameType              int     `json:"game_type"`
 	Genres                []int   `json:"genres"`
+	Hypes                 int     `json:"hypes"`
 	InvolvedCompanies     []int   `json:"involved_companies"`
-	Keywords              []int   `json:"keywords,omitempty"`
-	MultiplayerModes      []int   `json:"multiplayer_modes,omitempty"`
+	Keywords              []int   `json:"keywords"`
+	LanguageSupports      []int   `json:"language_supports"`
+	MultiplayerModes      []int   `json:"multiplayer_modes"`
 	Name                  string  `json:"name"`
+	ParentGame            int     `json:"parent_game"`
 	Platforms             []int   `json:"platforms"`
 	PlayerPerspectives    []int   `json:"player_perspectives"`
-	Rating                float64 `json:"rating,omitempty"`
-	RatingCount           int     `json:"rating_count,omitempty"`
+	Ports                 []int   `json:"ports"`
+	Rating                float64 `json:"rating"`
+	RatingCount           int     `json:"rating_count"`
 	ReleaseDates          []int   `json:"release_dates"`
+	Remakes               []int   `json:"remakes"`
+	Remasters             []int   `json:"remasters"`
 	Screenshots           []int   `json:"screenshots"`
 	SimilarGames          []int   `json:"similar_games"`
 	Slug                  string  `json:"slug"`
-	Storyline             string  `json:"storyline,omitempty"`
+	StandaloneExpansions  []int   `json:"standalone_explansions"`
+	Status                int     `json:"status"`
+	Storyline             string  `json:"storyline"`
 	Summary               string  `json:"summary"`
 	Tags                  []int   `json:"tags"`
 	Themes                []int   `json:"themes"`
-	TotalRating           float64 `json:"total_rating,omitempty"`
-	TotalRatingCount      int     `json:"total_rating_count,omitempty"`
+	TotalRating           float64 `json:"total_rating"`
+	TotalRatingCount      int     `json:"total_rating_count"`
 	UpdatedAt             int     `json:"updated_at"`
 	URL                   string  `json:"url"`
-	Videos                []int   `json:"videos,omitempty"`
-	Websites              []int   `json:"websites,omitempty"`
-	Checksum              string  `json:"checksum"`
-	Remakes               []int   `json:"remakes,omitempty"`
-	Remasters             []int   `json:"remasters,omitempty"`
-	GameLocalizations     []int   `json:"game_localizations,omitempty"`
-	Collections           []int   `json:"collections,omitempty"`
-	GameType              int     `json:"game_type"`
-	Artworks              []int   `json:"artworks,omitempty"`
-	ParentGame            int     `json:"parent_game,omitempty"`
-	LanguageSupports      []int   `json:"language_supports,omitempty"`
-	VersionParent         int     `json:"version_parent,omitempty"`
-	VersionTitle          string  `json:"version_title,omitempty"`
-	Hypes                 int     `json:"hypes,omitempty"`
-	Dlcs                  []int   `json:"dlcs,omitempty"`
+	VersionParent         int     `json:"version_parent"`
+	VersionTitle          string  `json:"version_title"`
+	Videos                []int   `json:"videos"`
+	Websites              []int   `json:"websites"`
 }
