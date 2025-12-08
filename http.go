@@ -8,9 +8,6 @@ import (
 	"net/url"
 )
 
-// request with context?
-
-const GRANT_TYPE = "client_credentials"
 const IGDB_TOKEN_URL = "https://id.twitch.tv/oauth2/token"
 const IGDB_GAMES_URL = "https://api.igdb.com/v4/games"
 
@@ -22,16 +19,20 @@ func requestIgdbToken(envVars map[string]string) ([]byte, int, error) {
 	req_data := url.Values{
 		"client_id":     {client_id},
 		"client_secret": {client_secret},
-		"grant_type":    {GRANT_TYPE},
+		"grant_type":    {"client_credentials"},
 	}
 
 	data, statusCode, err := postFormReq(IGDB_TOKEN_URL, req_data)
 	if err != nil {
 		return nil, http.StatusInternalServerError, err
 	}
+	if statusCode != http.StatusOK {
+		return data, statusCode, fmt.Errorf("http error: %d", statusCode)
+	}
 	return data, statusCode, nil
 }
 
+// sends POST req to IGDB server to get games data based on user query
 func fetchIgdbData(query, accessToken string) ([]byte, int, error) {
 	clientId, err := getEnvValue("IGDB_CLIENT_ID")
 	if err != nil {
@@ -65,6 +66,7 @@ func postFormReq(url string, data url.Values) ([]byte, int, error) {
 	return body, res.StatusCode, nil
 }
 
+// sends POST req with given headers and body
 func postReq(url, body string, headers map[string]string) ([]byte, int, error) {
 	client := http.DefaultClient
 	marshalled := []byte(body)
@@ -77,8 +79,8 @@ func postReq(url, body string, headers map[string]string) ([]byte, int, error) {
 	for key, value := range headers {
 		req.Header.Add(key, value)
 	}
-	fmt.Println("request:")
-	fmt.Println(req)
+	// fmt.Println("request:") //debugging
+	// fmt.Println(req)
 
 	res, err := client.Do(req)
 	if err != nil {

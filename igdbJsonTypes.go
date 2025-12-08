@@ -1,17 +1,20 @@
 package main
 
+// Structs for unmarshalling IGDB HTTP req errors
 type IgdbError []struct {
 	Title  string `json:"title"`
 	Status int    `json:"status"`
 	Cause  string `json:"cause"`
 }
 
+// Struct for unmarshalling IGDB auth token
 type IgdbToken struct {
 	AccessToken string `json:"access_token"`
 	ExpiresIn   int    `json:"expires_in"`
 	TokenType   string `json:"token_type"`
 }
 
+// Struct for unmarshalling IGDB games data
 type IgdbGames []struct {
 	ID                    int     `json:"id"`
 	AgeRatings            []int   `json:"age_ratings"`
